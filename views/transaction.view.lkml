@@ -43,7 +43,8 @@ view: transaction {
       net_price_curr,
       pdsll_item_delivery_dt,
       pdsll_mat_grp_cd,
-      predicted_OTIF.scores[offset(0)] ex_scores,
+      predicted_OTIF.scores[offset(0)] o_scores,
+      predicted_OTIF.scores[offset(1)] l_scores,
       product_base_uom_meas,
       product_grp_cd,
       product_type_cd,
@@ -51,19 +52,20 @@ view: transaction {
       purch_doc_item_num,
       purch_doc_num,
       purch_order_quan,
-      vendor_num,
-      from `mi-4-305707.cswg_cust_reliability.predictions_2022_09_21T01_12_44_960Z_685`
+      vendor_num
+      from `mi-4-305707.cswg_cust_reliability.predictions_2022_09_21T01_12_44_960Z_685` limit 10
        ;;
-  }
-
-  measure: count {
-    type: count
-    drill_fields: [detail*]
   }
 
   dimension: abc_indicator {
     type: string
     sql: ${TABLE}.ABC_Indicator ;;
+  }
+
+  dimension: primary_column {
+    type: string
+    primary_key: yes
+    sql:concat(${plant_cd},${vendor_num},${pps},${product_num}) ;;
   }
 
   dimension: commodity_cd {
@@ -276,9 +278,14 @@ view: transaction {
     sql: ${TABLE}.pdsll_mat_grp_cd ;;
   }
 
-  dimension: ex_scores {
+  dimension: o_scores {
     type: number
-    sql: ${TABLE}.ex_scores ;;
+    sql: ${TABLE}.o_scores ;;
+  }
+
+  dimension: l_scores {
+    type: number
+    sql: ${TABLE}.l_scores ;;
   }
 
   dimension: product_base_uom_meas {
@@ -320,6 +327,17 @@ view: transaction {
     type: string
     sql: ${TABLE}.vendor_num ;;
   }
+
+  measure: count {
+    type: count
+    drill_fields: [detail*]
+  }
+
+  measure: amount {
+    type: sum
+    sql:cast( ${purch_order_quan} as int)*cast(${net_price_curr} as int)  ;;
+  }
+
 
   set: detail {
     fields: [
@@ -366,7 +384,8 @@ view: transaction {
       net_price_curr,
       pdsll_item_delivery_dt,
       pdsll_mat_grp_cd,
-      ex_scores,
+      o_scores,
+      l_scores,
       product_base_uom_meas,
       product_grp_cd,
       product_type_cd,
