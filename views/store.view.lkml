@@ -4,6 +4,7 @@ view: store {
 
   dimension: store_cd {
     type: string
+    primary_key: yes
     sql: ${TABLE}.store_cd ;;
   }
 

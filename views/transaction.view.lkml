@@ -52,9 +52,16 @@ view: transaction {
       purch_doc_item_num,
       purch_doc_num,
       purch_order_quan,
-      vendor_num
-      from `mi-4-305707.cswg_cust_reliability.predictions_2022_09_21T01_12_44_960Z_685` limit 10
+      vendor_num,
+      row_number() OVER(ORDER BY purch_doc_dt) AS prim_key
+      from `mi-4-305707.cswg_cust_reliability.predictions_2022_09_21T01_12_44_960Z_685`
        ;;
+  }
+
+  dimension: prim_key {
+    type: number
+    primary_key: yes
+    sql: ${TABLE}.prim_key ;;
   }
 
   dimension: abc_indicator {
@@ -62,11 +69,7 @@ view: transaction {
     sql: ${TABLE}.ABC_Indicator ;;
   }
 
-  dimension: primary_column {
-    type: string
-    primary_key: yes
-    sql:concat(${plant_cd},${vendor_num},${pps},${product_num}) ;;
-  }
+
 
   dimension: commodity_cd {
     type: string
@@ -95,6 +98,7 @@ view: transaction {
 
   dimension: pps {
     type: string
+    primary_key: yes
     sql: ${TABLE}.PPS ;;
   }
 
@@ -264,8 +268,8 @@ view: transaction {
   }
 
   dimension: net_price_curr {
-    type: string
-    sql: ${TABLE}.net_price_curr ;;
+    type: number
+    sql: cast(${TABLE}.net_price_curr as FLOAT64) ;;
   }
 
   dimension: pdsll_item_delivery_dt {
@@ -285,7 +289,7 @@ view: transaction {
 
   dimension: l_scores {
     type: number
-    sql: ${TABLE}.l_scores ;;
+    sql: cast(${TABLE}.l_scores as FLOAT64);;
   }
 
   dimension: product_base_uom_meas {
@@ -319,8 +323,8 @@ view: transaction {
   }
 
   dimension: purch_order_quan {
-    type: string
-    sql: ${TABLE}.purch_order_quan ;;
+    type: number
+    sql: cast(${TABLE}.purch_order_quan as FLOAT64) ;;
   }
 
   dimension: vendor_num {
@@ -336,8 +340,13 @@ view: transaction {
   measure: amount {
     type: sum
     sql:cast( ${purch_order_quan} as int)*cast(${net_price_curr} as int)  ;;
+    #sql: ${purch_order_quan} *${net_price_curr};;
   }
 
+  measure: delay_amount {
+    type: sum
+    sql:case when ${l_scores} >= @{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
+  }
 
   set: detail {
     fields: [
