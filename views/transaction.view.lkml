@@ -146,112 +146,112 @@ view: transaction {
 
   dimension: ex_purch_doc_item_num {
     type: number
-    sql: ${TABLE}.ex_purch_doc_item_num ;;
+    sql: case when ${TABLE}.ex_purch_doc_item_num >=${popup_donut} then ${TABLE}.ex_purch_doc_item_num end ;;
   }
 
   dimension: ex_purch_doc_num {
     type: number
-    sql: ${TABLE}.ex_purch_doc_num ;;
+    sql: case when ${TABLE}.ex_purch_doc_num >=${popup_donut} then ${TABLE}.ex_purch_doc_num end ;;
   }
 
   dimension: ex_purch_doc_dt {
     type: number
-    sql: ${TABLE}.ex_purch_doc_dt ;;
+    sql: case when ${TABLE}.ex_purch_doc_dt >=${popup_donut} then ${TABLE}.ex_purch_doc_dt end ;;
   }
 
   dimension: ex_purch_order_quan {
     type: number
-    sql: ${TABLE}.ex_purch_order_quan ;;
+    sql: case when ${TABLE}.ex_purch_order_quan >=${popup_donut} then ${TABLE}.ex_purch_order_quan end ;;
   }
 
   dimension: ex_product_base_uom_meas {
     type: number
-    sql: ${TABLE}.ex_product_base_uom_meas ;;
+    sql: case when ${TABLE}.ex_product_base_uom_meas >=${popup_donut} then ${TABLE}.ex_product_base_uom_meas end ;;
   }
 
   dimension: ex_product_type_cd {
     type: number
-    sql: ${TABLE}.ex_product_type_cd ;;
+    sql: case when ${TABLE}.ex_product_type_cd >=${popup_donut} then ${TABLE}.ex_product_type_cd end ;;
   }
 
   dimension: ex_product_grp_cd {
     type: number
-    sql: ${TABLE}.ex_product_grp_cd ;;
+    sql: case when ${TABLE}.ex_product_grp_cd >=${popup_donut} then ${TABLE}.ex_product_grp_cd end ;;
   }
 
   dimension: ex_vendor_num {
     type: number
-    sql: ${TABLE}.ex_vendor_num ;;
+    sql: case when ${TABLE}.ex_vendor_num >=${popup_donut} then ${TABLE}.ex_vendor_num end ;;
   }
 
   dimension: ex_vendor_city {
     type: number
-    sql: ${TABLE}.ex_Vendor_City ;;
+    sql: case when ${TABLE}.ex_vendor_city >=${popup_donut} then ${TABLE}.ex_vendor_city end ;;
   }
 
   dimension: ex_vendor_country_cd {
     type: number
-    sql: ${TABLE}.ex_Vendor_Country_Cd ;;
+    sql: case when ${TABLE}.ex_vendor_country_cd >=${popup_donut} then ${TABLE}.ex_vendor_country_cd end ;;
   }
 
   dimension: ex_product_num {
     type: number
-    sql: ${TABLE}.ex_Product_num ;;
+    sql: case when ${TABLE}.ex_product_num >=${popup_donut} then ${TABLE}.ex_product_num end ;;
   }
 
   dimension: ex_incoterms_part1 {
     type: number
-    sql: ${TABLE}.ex_incoterms_part1 ;;
+    sql: case when ${TABLE}.ex_incoterms_part1 >=${popup_donut} then ${TABLE}.ex_incoterms_part1 end ;;
   }
 
   dimension: ex_abc_indicator {
     type: number
-    sql: ${TABLE}.ex_ABC_Indicator ;;
+    sql: case when ${TABLE}.ex_abc_indicator >=${popup_donut} then ${TABLE}.ex_abc_indicator end ;;
   }
 
   dimension: ex_commodity_cd {
     type: number
-    sql: ${TABLE}.ex_Commodity_cd ;;
+    sql: case when ${TABLE}.ex_commodity_cd >=${popup_donut} then ${TABLE}.ex_commodity_cd end ;;
   }
 
   dimension: ex_plant_cd {
     type: number
-    sql: ${TABLE}.ex_Plant_Cd ;;
+    sql: case when ${TABLE}.ex_plant_cd >=${popup_donut} then ${TABLE}.ex_plant_cd end ;;
   }
 
   dimension: ex_plant_city_name {
     type: number
-    sql: ${TABLE}.ex_Plant_City_Name ;;
+    sql: case when ${TABLE}.ex_plant_city_name >=${popup_donut} then ${TABLE}.ex_plant_city_name end ;;
   }
 
   dimension: ex_plant_region_cd {
     type: number
-    sql: ${TABLE}.ex_Plant_Region_Cd ;;
+    sql: case when ${TABLE}.ex_plant_region_cd >=${popup_donut} then ${TABLE}.ex_plant_region_cd end ;;
   }
 
   dimension: ex_plant_country_cd {
     type: number
-    sql: ${TABLE}.ex_Plant_Country_Cd ;;
+    sql: case when ${TABLE}.ex_plant_country_cd >=${popup_donut} then ${TABLE}.ex_plant_country_cd end ;;
   }
 
   dimension: ex_net_price_curr {
     type: number
-    sql: ${TABLE}.ex_net_price_curr ;;
+    sql: case when ${TABLE}.ex_net_price_curr >=${popup_donut} then ${TABLE}.ex_net_price_curr end ;;
   }
 
   dimension: ex_goods_receipt_process_time_days {
     type: number
-    sql: ${TABLE}.ex_goods_receipt_process_time_days ;;
+    sql: case when ${TABLE}.ex_goods_receipt_process_time_days >=${popup_donut} then ${TABLE}.ex_goods_receipt_process_time_days end ;;
   }
 
   dimension: ex_pdsll_item_delivery_dt {
     type: number
-    sql: ${TABLE}.ex_pdsll_item_delivery_dt ;;
+    sql: case when ${TABLE}.ex_pdsll_item_delivery_dt >=${popup_donut} then ${TABLE}.ex_pdsll_item_delivery_dt end ;;
   }
 
   dimension: ex_pps {
     type: number
-    sql: ${TABLE}.ex_PPS ;;
+    sql: case when ${TABLE}.ex_pps >=${popup_donut} then ${TABLE}.ex_pps end ;;
   }
 
   dimension: ex_output_display_name {
@@ -282,7 +282,8 @@ view: transaction {
 
   dimension: pdsll_item_delivery_month_format {
     type: string
-    sql: format_date('%d-%mmm-%y',${pdsll_item_delivery_raw});;
+    label: "Expected Delivery Date"
+    sql: format_date('%d-%b-%y',${pdsll_item_delivery_date});;
   }
 
   dimension_group: pdsll_item_delivery {
@@ -315,17 +316,35 @@ view: transaction {
     sql: cast(${TABLE}.l_scores as FLOAT64);;
   }
 
-  dimension: l_scores_2 {
+  dimension: delay_probability {
+    type: number
+    sql: cast(@{delay_probability_value} as FLOAT64);;
+  }
+
+  dimension: popup_donut {
+    type: number
+    sql: cast(@{popup_donut_value} as FLOAT64);;
+  }
+
+  measure: l_scores_2 {
     type: number
     label: "Delay Probability"
     sql: cast(${TABLE}.l_scores as FLOAT64);;
     value_format_name: percent_0
-    html: {% if l_scores._value >= 0.5 %}
+    html: {% if l_scores._value >= delay_probability._value  %}
     <p style="background-color:red;text-align:right;" >{{rendered_value}}</p>
     {% else %}
     <p style="background-color:green;text-align:right;" >{{rendered_value}}</p>
     {% endif %}
     ;;
+
+    drill_fields: [ex_purch_doc_item_num, ex_purch_doc_num, ex_purch_doc_dt, ex_purch_order_quan, ex_product_base_uom_meas, ex_product_type_cd, ex_product_grp_cd, ex_vendor_num, ex_vendor_city, ex_vendor_country_cd, ex_product_num, ex_incoterms_part1, ex_abc_indicator, ex_commodity_cd, ex_plant_cd, ex_plant_city_name, ex_plant_region_cd, ex_plant_country_cd, ex_net_price_curr, ex_goods_receipt_process_time_days, ex_pdsll_item_delivery_dt, ex_pps]
+    link: {
+      label: "Drill for Detailed Analysis"
+      url: "
+      {% assign vis_config = '{\"type\":\"looker_donut_multiples\"}' %}
+      {{link}}&vis_config={{ vis_config | encode_uri}}&toggle=dat,pik,vis&limit=5000"
+    }
   }
 
   dimension: product_base_uom_meas {

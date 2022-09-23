@@ -3,6 +3,9 @@ project_name: "cswg_cust_reliability"
 constant: delay_probability_value {
   value: ".5"
 }
+constant: popup_donut_value {
+  value: ".05"
+}
 
 
 constant: big_money_format {
