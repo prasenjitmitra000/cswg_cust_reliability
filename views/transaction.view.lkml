@@ -339,6 +339,7 @@ view: transaction {
 
   measure: delay_amount {
     type: sum
+    label: "Transaction Amount"
     sql:case when ${l_scores} >= @{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
   }
 
@@ -350,6 +351,7 @@ view: transaction {
 
   measure: delay_count {
     type: sum
+    label: "Count"
     sql:case when ${l_scores} >= @{delay_probability_value} then 1 else 0 end ;;
   }
 
