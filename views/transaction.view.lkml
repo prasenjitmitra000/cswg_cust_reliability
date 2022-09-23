@@ -53,7 +53,7 @@ view: transaction {
       purch_doc_num,
       purch_order_quan,
       vendor_num
-      from `mi-4-305707.cswg_cust_reliability.predictions_2022_09_21T01_12_44_960Z_685` limit 10
+      from `mi-4-305707.cswg_cust_reliability.predictions_2022_09_21T01_12_44_960Z_685`
        ;;
   }
 
@@ -264,8 +264,8 @@ view: transaction {
   }
 
   dimension: net_price_curr {
-    type: string
-    sql: ${TABLE}.net_price_curr ;;
+    type: number
+    sql: cast(${TABLE}.net_price_curr as FLOAT64) ;;
   }
 
   dimension: pdsll_item_delivery_dt {
@@ -285,7 +285,7 @@ view: transaction {
 
   dimension: l_scores {
     type: number
-    sql: ${TABLE}.l_scores ;;
+    sql: cast(${TABLE}.l_scores as FLOAT64);;
   }
 
   dimension: product_base_uom_meas {
@@ -319,8 +319,8 @@ view: transaction {
   }
 
   dimension: purch_order_quan {
-    type: string
-    sql: ${TABLE}.purch_order_quan ;;
+    type: number
+    sql: cast(${TABLE}.purch_order_quan as FLOAT64) ;;
   }
 
   dimension: vendor_num {
@@ -335,9 +335,14 @@ view: transaction {
 
   measure: amount {
     type: sum
-    sql:cast( ${purch_order_quan} as int)*cast(${net_price_curr} as int)  ;;
+    #sql:cast( ${purch_order_quan} as int)*cast(${net_price_curr} as int)  ;;
+    sql: ${purch_order_quan} *${net_price_curr};;
   }
 
+  measure: delay_amount {
+    type: sum
+    sql:case when ${l_scores} >= @{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
+  }
 
   set: detail {
     fields: [
