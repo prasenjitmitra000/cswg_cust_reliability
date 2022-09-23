@@ -124,6 +124,7 @@ view: transaction {
 
   dimension: product_num {
     type: string
+    label: "Product"
     sql: ${TABLE}.Product_num ;;
   }
 
@@ -272,9 +273,30 @@ view: transaction {
     sql: cast(${TABLE}.net_price_curr as FLOAT64) ;;
   }
 
+
   dimension: pdsll_item_delivery_dt {
     type: string
-    sql: ${TABLE}.pdsll_item_delivery_dt ;;
+    sql: case when length(${TABLE}.pdsll_item_delivery_dt) =10 then concat(SUBSTR(${TABLE}.pdsll_item_delivery_dt,7,4),'-',SUBSTR(${TABLE}.pdsll_item_delivery_dt,4,2),'-',SUBSTR(${TABLE}.pdsll_item_delivery_dt,0,2)) end;;
+  }
+
+  dimension: pdsll_item_delivery_month_format {
+    type: string
+    sql: format_date('%d-%mmm-%y',${pdsll_item_delivery_raw});;
+  }
+
+  dimension_group: pdsll_item_delivery {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    datatype: datetime
+    sql: ${pdsll_item_delivery_dt} ;;
   }
 
   dimension: pdsll_mat_grp_cd {
@@ -292,8 +314,22 @@ view: transaction {
     sql: cast(${TABLE}.l_scores as FLOAT64);;
   }
 
+  dimension: l_scores_2 {
+    type: number
+    label: "Delay Probability"
+    sql: cast(${TABLE}.l_scores as FLOAT64);;
+    value_format_name: percent_0
+    html: {% if l_scores._value >= 0.5 %}
+    <p style="background-color:red;text-align:right;" >{{rendered_value}}</p>
+    {% else %}
+    <p style="background-color:green;text-align:right;" >{{rendered_value}}</p>
+    {% endif %}
+    ;;
+  }
+
   dimension: product_base_uom_meas {
     type: string
+    label: "Ordering Unit"
     sql: ${TABLE}.product_base_uom_meas ;;
   }
 
@@ -314,16 +350,19 @@ view: transaction {
 
   dimension: purch_doc_item_num {
     type: string
+    label: "PO Line Item"
     sql: ${TABLE}.purch_doc_item_num ;;
   }
 
   dimension: purch_doc_num {
     type: string
+    label: "PO Number"
     sql: ${TABLE}.purch_doc_num ;;
   }
 
   dimension: purch_order_quan {
     type: number
+    label: "PO Quantity"
     sql: cast(${TABLE}.purch_order_quan as FLOAT64) ;;
   }
 
@@ -341,18 +380,20 @@ view: transaction {
     type: sum
     label: "Transaction Amount"
     sql:case when ${l_scores} >= @{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
+    html: @{big_money_format} ;;
   }
 
   measure: amount {
     type: sum
     sql:cast( ${purch_order_quan} as int)*cast(${net_price_curr} as int)  ;;
     #sql: ${purch_order_quan} *${net_price_curr};;
+    html: @{big_money_format} ;;
   }
 
   measure: delay_count {
-    type: sum
+    type: count_distinct
     label: "Count"
-    sql:case when ${l_scores} >= @{delay_probability_value} then 1 else 0 end ;;
+    sql:case when ${l_scores} >= @{delay_probability_value} then concat(${purch_doc_num},'_',${purch_doc_item_num}) end ;;
   }
 
   set: detail {
