@@ -337,15 +337,20 @@ view: transaction {
     drill_fields: [detail*]
   }
 
+  measure: delay_amount {
+    type: sum
+    sql:case when ${l_scores} >= @{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
+  }
+
   measure: amount {
     type: sum
     sql:cast( ${purch_order_quan} as int)*cast(${net_price_curr} as int)  ;;
     #sql: ${purch_order_quan} *${net_price_curr};;
   }
 
-  measure: delay_amount {
+  measure: delay_count {
     type: sum
-    sql:case when ${l_scores} >= @{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
+    sql:case when ${l_scores} >= @{delay_probability_value} then 1 else 0 end ;;
   }
 
   set: detail {
