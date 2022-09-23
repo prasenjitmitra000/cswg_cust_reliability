@@ -125,6 +125,7 @@ view: transaction {
   dimension: product_num {
     type: string
     sql: ${TABLE}.Product_num ;;
+    value_format_name: id
   }
 
   dimension: vendor_city {
@@ -346,6 +347,13 @@ view: transaction {
   measure: delay_amount {
     type: sum
     sql:case when ${l_scores} >= @{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
+  }
+
+  measure: part_delay_risk {
+    type: count_distinct
+    label: "# of parts at Delay Risk"
+    sql: ${product_num} ;;
+    #html: @{big_number_format} ;;
   }
 
   set: detail {
