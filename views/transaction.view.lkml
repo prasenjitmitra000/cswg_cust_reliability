@@ -126,6 +126,7 @@ view: transaction {
     type: string
     label: "Product"
     sql: ${TABLE}.Product_num ;;
+    value_format_name: id
   }
 
   dimension: vendor_city {
@@ -394,6 +395,27 @@ view: transaction {
     type: count_distinct
     label: "Count"
     sql:case when ${l_scores} >= @{delay_probability_value} then concat(${purch_doc_num},'_',${purch_doc_item_num}) end ;;
+  }
+
+  measure: part_delay_risk {
+    type: count_distinct
+    label: "# of Parts at Delay Risk"
+    sql: ${product_num} ;;
+    html: @{big_number_format} ;;
+  }
+
+  measure: po_lines_at_delay_risk {
+    type: number
+    label: "# of PO Lines at Delay Risk"
+    sql: $count(case when @{delay_probability_value}>=.5 then concat(${purch_doc_num},${purch_doc_item_num}) end  ;;
+    html: @{big_number_format} ;;
+  }
+
+  measure: sum_po_lines_delay_risk {
+    type: number
+    label: "PO Lines Value at Delay Risk"
+    sql: $count(case when @{delay_probability_value}>=.5 then ${purch_doc_item_num} end ;;
+    html: @{big_number_format} ;;
   }
 
   set: detail {
