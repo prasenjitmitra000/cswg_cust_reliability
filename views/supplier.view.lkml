@@ -29,6 +29,7 @@ view: supplier {
 
   dimension: supplier_num {
     type: number
+    primary_key: yes
     sql: ${TABLE}.supplier_num ;;
   }
 
