@@ -78,6 +78,7 @@ view: transaction {
 
   dimension: lead_time_variance {
     type: string
+    label: "Lead Time"
     sql: ${TABLE}.Lead_Time_Variance ;;
   }
 
@@ -332,9 +333,9 @@ view: transaction {
     sql: cast(${TABLE}.l_scores as FLOAT64);;
     value_format_name: percent_0
     html: {% if l_scores._value >= delay_probability._value  %}
-    <p style="background-color:red;text-align:right;" >{{rendered_value}}</p>
+    <p style="background-color:red;text-align:right;padding-right:5px;" >{{rendered_value}}</p>
     {% else %}
-    <p style="background-color:green;text-align:right;" >{{rendered_value}}</p>
+    <p style="background-color:green;text-align:right;padding-right:5px;" >{{rendered_value}}</p>
     {% endif %}
     ;;
 
