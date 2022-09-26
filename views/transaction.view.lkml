@@ -391,6 +391,12 @@ view: transaction {
     sql: ${TABLE}.vendor_num ;;
   }
 
+  dimension: delay_vendor_num {
+    type: string
+    sql: case when ${l_scores}>=@{delay_probability_value} then ${TABLE}.vendor_num end ;;
+  }
+
+
   measure: count {
     type: count
     drill_fields: [detail*]
@@ -428,16 +434,22 @@ view: transaction {
     label: "# of PO Lines at Delay Risk"
     #sql: count(case when ${l_scores}>=@{delay_probability_value} then concat(${purch_doc_num},${purch_doc_item_num}) end)  ;;
     sql: count(case when ${l_scores}>=@{delay_probability_value} then concat(${purch_doc_num},${purch_doc_item_num}) end)  ;;
-
     html: @{big_number_format} ;;
+  }
+  measure: po_lines_at_delay_risk_percentage {
+    type: number
+    label: "# of PO Lines at Delay Risk %"
+    #sql: count(case when ${l_scores}>=@{delay_probability_value} then concat(${purch_doc_num},${purch_doc_item_num}) end)  ;;
+    sql: ${po_lines_at_delay_risk}/${count};;
+    value_format_name: percent_0
   }
 
   measure: sum_po_lines_delay_risk {
-    type: number
+    type: sum
     label: "PO Lines Value at Delay Risk"
     #sql: count(case when ${l_scores}>=@{delay_probability_value} then ${purch_doc_item_num} end) ;;
-    sql: count(case when ${l_scores}>=@{delay_probability_value} then ${purch_doc_item_num} end) ;;
-    html: @{big_number_format} ;;
+    sql: case when ${l_scores}>=@{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
+    html: @{big_money_format} ;;
   }
 
   set: detail {

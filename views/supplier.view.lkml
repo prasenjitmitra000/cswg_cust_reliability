@@ -2,7 +2,7 @@ view: supplier {
   sql_table_name: `cswg_cust_reliability.supplier`
     ;;
 
-  dimension: city {
+  dimension: supplier_city {
     type: string
     sql: ${TABLE}.city ;;
   }

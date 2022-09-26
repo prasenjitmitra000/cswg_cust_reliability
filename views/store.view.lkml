@@ -23,6 +23,12 @@ view: store {
     sql: ${TABLE}.store_longitude ;;
   }
 
+  dimension: store_location {
+    type: location
+    sql_latitude: substr(cast(${store_latitude} as string),0,5) ;;
+    sql_longitude: substr(cast(${store_longitude} as string),0,5) ;;
+  }
+
   dimension: store_name {
     type: string
     sql: ${TABLE}.store_name ;;
