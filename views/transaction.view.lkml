@@ -427,7 +427,7 @@ view: transaction {
     type: number
     label: "# of PO Lines at Delay Risk"
     #sql: count(case when ${l_scores}>=@{delay_probability_value} then concat(${purch_doc_num},${purch_doc_item_num}) end)  ;;
-    sql: case when ${l_scores}>=@{delay_probability_value} then count(concat(${purch_doc_num},${purch_doc_item_num})) end  ;;
+    sql: count(case when ${l_scores}>=@{delay_probability_value} then concat(${purch_doc_num},${purch_doc_item_num}) end)  ;;
 
     html: @{big_number_format} ;;
   }
@@ -436,7 +436,7 @@ view: transaction {
     type: number
     label: "PO Lines Value at Delay Risk"
     #sql: count(case when ${l_scores}>=@{delay_probability_value} then ${purch_doc_item_num} end) ;;
-    sql: case when ${l_scores}>=@{delay_probability_value} then count(${purch_doc_item_num}) end ;;
+    sql: count(case when ${l_scores}>=@{delay_probability_value} then ${purch_doc_item_num} end) ;;
     html: @{big_number_format} ;;
   }
 
