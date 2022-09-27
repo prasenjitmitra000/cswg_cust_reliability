@@ -288,6 +288,7 @@ view: transaction {
   }
 
   dimension_group: pdsll_item_delivery {
+    label: "Expected Delivery Date"
     type: time
     timeframes: [
       raw,
