@@ -33,10 +33,10 @@ view: store {
     type: string
     label: "Store name"
     sql: ${TABLE}.store_name ;;
-    link: {
-      label: "{{ value }}"
-      url: "https://tataconsultingservices.looker.com/dashboards/395?Store={{ value }}"
-    }
+    #link: {
+    #  label: "{{ value }}"
+    #  url: "https://tataconsultingservices.looker.com/dashboards/395?Store={{ value }}"
+    #}
   }
 
   dimension: store_regional_cd {

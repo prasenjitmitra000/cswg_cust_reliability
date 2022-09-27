@@ -28,10 +28,16 @@ view: supplier {
     sql_longitude: substr(cast(${long} as string),0,5) ;;
   }
 
-
   dimension: supplier_name {
     type: string
     label: "Supplier name"
+    sql: ${TABLE}.supplier_name ;;
+
+  }
+
+  dimension: supplier {
+    type: string
+    label: "Supplier"
     sql: ${TABLE}.supplier_name ;;
     link: {
       label: "{{ value }}"
