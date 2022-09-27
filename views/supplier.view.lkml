@@ -22,6 +22,13 @@ view: supplier {
     sql: ${TABLE}.supplier_cntry_cd ;;
   }
 
+  dimension: supplier_location {
+    type: location
+    sql_latitude: substr(cast(${lat} as string),0,5) ;;
+    sql_longitude: substr(cast(${long} as string),0,5) ;;
+  }
+
+
   dimension: supplier_name {
     type: string
     label: "Supplier name"

@@ -288,6 +288,7 @@ view: transaction {
   }
 
   dimension_group: pdsll_item_delivery {
+    label: "Expected Delivery Date"
     type: time
     timeframes: [
       raw,
@@ -299,7 +300,7 @@ view: transaction {
       year
     ]
     datatype: datetime
-    sql: ${pdsll_item_delivery_dt} ;;
+    sql:  safe.PARSE_DATE('%d-%m-%Y',  ${TABLE}.pdsll_item_delivery_dt);;
   }
 
   dimension: pdsll_mat_grp_cd {
