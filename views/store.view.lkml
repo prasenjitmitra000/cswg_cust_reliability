@@ -25,13 +25,22 @@ view: store {
 
   dimension: store_location {
     type: location
+    #link:
+      #label: "Drill for Detailed analysis"
+      #url: "https://tataconsultingservices.looker.com/dashboards/395"
+
     sql_latitude: substr(cast(${store_latitude} as string),0,5) ;;
     sql_longitude: substr(cast(${store_longitude} as string),0,5) ;;
   }
 
   dimension: store_name {
     type: string
+    label: "Store name"
     sql: ${TABLE}.store_name ;;
+    link: {
+      label: "{{ value }}"
+      url: "https://tataconsultingservices.looker.com/dashboards/395?Store={{ value }}"
+    }
   }
 
   dimension: store_regional_cd {

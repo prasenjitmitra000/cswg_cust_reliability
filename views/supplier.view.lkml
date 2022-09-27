@@ -24,9 +24,13 @@ view: supplier {
 
   dimension: supplier_name {
     type: string
+    label: "Supplier name"
     sql: ${TABLE}.supplier_name ;;
+    link: {
+      label: "{{ value }}"
+      url: "https://tataconsultingservices.looker.com/dashboards/395?Supplier={{ value }}"
+    }
   }
-
   dimension: supplier_num {
     type: number
     primary_key: yes
