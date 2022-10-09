@@ -55,7 +55,7 @@ view: transaction_new {
       purch_order_quan,
       vendor_num,
       row_number() OVER(ORDER BY purch_doc_dt) AS prim_key
-      from `mi-4-305707.cswg_cust_reliability.predictions_2022_10_09T06_15_02_637Z_728`
+      from `mi-4-305707.cswg_cust_reliability.predictions_2022_10_09T05_30_48_018Z_351`
        ;;
   }
 
@@ -451,7 +451,7 @@ view: transaction_new {
   measure: part_delay_risk {
     type: count_distinct
     label: "# of Parts at Delay Risk"
-    sql: ${product_num} ;;
+    sql:case when ${l_scores} >= @{delay_probability_value} then concat(${purch_doc_num},'_',${purch_doc_item_num}) end ;;
     html: @{big_number_format} ;;
     drill_fields: [supplier.supplier_name,supplier.supplier_city,supplier.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
   }
@@ -459,7 +459,7 @@ view: transaction_new {
   measure: part_delay_risk_map {
     type: count_distinct
     label: "# of Parts at Delay Risk"
-    sql: ${product_num} ;;
+    sql:case when ${l_scores} >= @{delay_probability_value} then concat(${purch_doc_num},'_',${purch_doc_item_num}) end ;;
     html: @{big_number_format} ;;
   }
 

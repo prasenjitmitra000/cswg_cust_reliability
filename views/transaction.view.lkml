@@ -429,7 +429,7 @@ view: transaction {
   measure: part_delay_risk {
     type: count_distinct
     label: "# of Parts at Delay Risk"
-    sql: ${product_num} ;;
+    sql:case when ${l_scores} >= @{delay_probability_value} then concat(${purch_doc_num},'_',${purch_doc_item_num}) end ;;
     html: @{big_number_format} ;;
     drill_fields: [supplier.supplier_name,supplier.supplier_city,supplier.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
   }
@@ -437,7 +437,7 @@ view: transaction {
   measure: part_delay_risk_map {
     type: count_distinct
     label: "# of Parts at Delay Risk"
-    sql: ${product_num} ;;
+    sql:case when ${l_scores} >= @{delay_probability_value} then concat(${purch_doc_num},'_',${purch_doc_item_num}) end ;;
     html: @{big_number_format} ;;
   }
 

@@ -16,7 +16,7 @@ explore: supplier_new {}
 
 explore: transaction_new {
   join: supplier_new {
-    view_label: "Supplier"
+    view_label: "Supplier New"
     type: left_outer
     sql_on: cast( ${transaction_new.vendor_num} as int)=${supplier_new.supplier_num}  ;;
     relationship: one_to_many
