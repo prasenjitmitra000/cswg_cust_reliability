@@ -12,13 +12,13 @@ persist_with: cswg_cust_reliability_default_datagroup
 
 explore: store {}
 
-explore: supplier {}
+explore: supplier_new {}
 
 explore: transaction_new {
-  join: supplier {
+  join: supplier_new {
     view_label: "Supplier"
     type: left_outer
-    sql_on: cast( ${transaction_new.vendor_num} as int)=${supplier.supplier_num}  ;;
+    sql_on: cast( ${transaction_new.vendor_num} as int)=${supplier_new.supplier_num}  ;;
     relationship: one_to_many
   }
   join: store {
