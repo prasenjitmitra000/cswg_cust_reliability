@@ -322,7 +322,7 @@ view: transaction_new {
       year
     ]
     datatype: datetime
-    sql:  safe.PARSE_DATE('%d-%m-%Y',  ${TABLE}.pdsll_item_delivery_dt);;
+    sql:  safe.PARSE_DATE('%Y-%m-%d',  ${TABLE}.pdsll_item_delivery_dt);;
   }
 
   #dimension: pdsll_mat_grp_cd {
