@@ -147,116 +147,139 @@ view: transaction {
 
   measure: ex_purch_doc_item_num {
     type: number
+    label: "Purch Doc Item Num"
     sql: case when ${TABLE}.ex_purch_doc_item_num >=${popup_donut} then ${TABLE}.ex_purch_doc_item_num end ;;
   }
 
   measure: ex_purch_doc_num {
     type: number
+    label: "Purch Doc Num"
     sql: case when ${TABLE}.ex_purch_doc_num >=${popup_donut} then ${TABLE}.ex_purch_doc_num end ;;
   }
 
   measure: ex_purch_doc_dt {
     type: number
+    label: "Purch Doc Dt"
     sql: case when ${TABLE}.ex_purch_doc_dt >=${popup_donut} then ${TABLE}.ex_purch_doc_dt end ;;
   }
 
   measure: ex_purch_order_quan {
     type: number
+    label: "Purch Order Quantity"
     sql: case when ${TABLE}.ex_purch_order_quan >=${popup_donut} then ${TABLE}.ex_purch_order_quan end ;;
   }
 
   measure: ex_product_base_uom_meas {
     type: number
+    label: "Product Base Uom Meas"
     sql: case when ${TABLE}.ex_product_base_uom_meas >=${popup_donut} then ${TABLE}.ex_product_base_uom_meas end ;;
   }
 
   measure: ex_product_type_cd {
     type: number
+    label: "Product Type Cd"
     sql: case when ${TABLE}.ex_product_type_cd >=${popup_donut} then ${TABLE}.ex_product_type_cd end ;;
   }
 
   measure: ex_product_grp_cd {
     type: number
+    label: "Product Group Cd"
     sql: case when ${TABLE}.ex_product_grp_cd >=${popup_donut} then ${TABLE}.ex_product_grp_cd end ;;
   }
 
   measure: ex_vendor_num {
     type: number
+    label: "Vendor Number"
     sql: case when ${TABLE}.ex_vendor_num >=${popup_donut} then ${TABLE}.ex_vendor_num end ;;
   }
 
   measure: ex_vendor_city {
     type: number
+    label: "Vendor City"
     sql: case when ${TABLE}.ex_vendor_city >=${popup_donut} then ${TABLE}.ex_vendor_city end ;;
   }
 
   measure: ex_vendor_country_cd {
     type: number
+    label: " Vendor Country Code"
     sql: case when ${TABLE}.ex_vendor_country_cd >=${popup_donut} then ${TABLE}.ex_vendor_country_cd end ;;
   }
 
   measure: ex_product_num {
     type: number
+    label: "Product number"
     sql: case when ${TABLE}.ex_product_num >=${popup_donut} then ${TABLE}.ex_product_num end ;;
   }
 
   measure: ex_incoterms_part1 {
     type: number
+    label: "Incoterms Part1"
     sql: case when ${TABLE}.ex_incoterms_part1 >=${popup_donut} then ${TABLE}.ex_incoterms_part1 end ;;
   }
 
   measure: ex_abc_indicator {
     type: number
+    label: "ABC Indicator"
     sql: case when ${TABLE}.ex_abc_indicator >=${popup_donut} then ${TABLE}.ex_abc_indicator end ;;
   }
 
   measure: ex_commodity_cd {
     type: number
+    label: "Commodity Cd"
     sql: case when ${TABLE}.ex_commodity_cd >=${popup_donut} then ${TABLE}.ex_commodity_cd end ;;
   }
 
   measure: ex_plant_cd {
     type: number
+    label: "Plant Cd"
     sql: case when ${TABLE}.ex_plant_cd >=${popup_donut} then ${TABLE}.ex_plant_cd end ;;
   }
 
   measure: ex_plant_city_name {
     type: number
+    label: "Plant City Name"
     sql: case when ${TABLE}.ex_plant_city_name >=${popup_donut} then ${TABLE}.ex_plant_city_name end ;;
   }
 
   measure: ex_plant_region_cd {
     type: number
+    label: "Plant Region Code"
     sql: case when ${TABLE}.ex_plant_region_cd >=${popup_donut} then ${TABLE}.ex_plant_region_cd end ;;
   }
 
   measure: ex_plant_country_cd {
     type: number
+    label: "Plant Country Code"
     sql: case when ${TABLE}.ex_plant_country_cd >=${popup_donut} then ${TABLE}.ex_plant_country_cd end ;;
   }
 
   measure: ex_net_price_curr {
     type: number
+    label: "Net Price Curr"
     sql: case when ${TABLE}.ex_net_price_curr >=${popup_donut} then ${TABLE}.ex_net_price_curr end ;;
   }
 
   measure: ex_goods_receipt_process_time_days {
     type: number
+    label: "Goods Receipt Process Time Days"
     sql: case when ${TABLE}.ex_goods_receipt_process_time_days >=${popup_donut} then ${TABLE}.ex_goods_receipt_process_time_days end ;;
   }
 
   measure: ex_pdsll_item_delivery_dt {
     type: number
+    label: "Item Delivery Date"
     sql: case when ${TABLE}.ex_pdsll_item_delivery_dt >=${popup_donut} then ${TABLE}.ex_pdsll_item_delivery_dt end ;;
   }
 
   measure: ex_pps {
     type: number
+    label: "PPS"
     sql: case when ${TABLE}.ex_pps >=${popup_donut} then ${TABLE}.ex_pps end ;;
   }
 
   dimension: ex_output_display_name {
     type: string
+    label: "Output Display Name"
     sql: ${TABLE}.ex_outputDisplayName ;;
   }
 
