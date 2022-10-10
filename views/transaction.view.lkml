@@ -434,6 +434,8 @@ view: transaction {
     drill_fields: [supplier.supplier_name,supplier.supplier_city,supplier.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
   }
 
+
+
   measure: part_delay_risk_map {
     type: count_distinct
     label: "# of Parts at Delay Risk"

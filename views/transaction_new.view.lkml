@@ -431,7 +431,7 @@ view: transaction_new {
     label: "Transaction Amount"
     sql:case when ${l_scores} >= @{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
     html: @{big_money_format} ;;
-    drill_fields: [supplier.supplier_name,supplier.supplier_city,supplier.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
+    drill_fields: [supplier_new.supplier_name,supplier_new.supplier_city,supplier_new.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
   }
 
   measure: amount {
@@ -445,7 +445,7 @@ view: transaction_new {
     type: count_distinct
     label: "Count"
     sql:case when ${l_scores} >= @{delay_probability_value} then concat(${purch_doc_num},'_',${purch_doc_item_num}) end ;;
-    drill_fields: [supplier.supplier_name,supplier.supplier_city,supplier.supplier_region_cd,store.store_name,store.store_country_cd,product_num,delay_count]
+    drill_fields: [supplier_new.supplier_name,supplier_new.supplier_city,supplier_new.supplier_region_cd,store.store_name,store.store_country_cd,product_num,delay_count]
   }
 
   measure: part_delay_risk {
@@ -453,7 +453,7 @@ view: transaction_new {
     label: "# of Parts at Delay Risk"
     sql:case when ${l_scores} >= @{delay_probability_value} then concat(${purch_doc_num},'_',${purch_doc_item_num}) end ;;
     html: @{big_number_format} ;;
-    drill_fields: [supplier.supplier_name,supplier.supplier_city,supplier.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
+    drill_fields: [supplier_new.supplier_name,supplier_new.supplier_city,supplier_new.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
   }
 
   measure: part_delay_risk_map {
@@ -469,7 +469,7 @@ view: transaction_new {
     #sql: count(case when ${l_scores}>=@{delay_probability_value} then concat(${purch_doc_num},${purch_doc_item_num}) end)  ;;
     sql: count(case when ${l_scores}>=@{delay_probability_value} then concat(${purch_doc_num},${purch_doc_item_num}) end)  ;;
     html: @{big_number_format} ;;
-    drill_fields: [supplier.supplier_name,supplier.supplier_city,supplier.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
+    drill_fields: [supplier_new.supplier_name,supplier_new.supplier_city,supplier_new.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
   }
   measure: po_lines_at_delay_risk_percentage {
     type: number
@@ -485,21 +485,21 @@ view: transaction_new {
     #sql: count(case when ${l_scores}>=@{delay_probability_value} then ${purch_doc_item_num} end) ;;
     sql: case when ${l_scores}>=@{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
     html: @{big_money_format} ;;
-    drill_fields: [supplier.supplier_name,supplier.supplier_city,supplier.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
+    drill_fields: [supplier_new.supplier_name,supplier_new.supplier_city,supplier_new.supplier_region_cd,store.store_name,store.store_country_cd,product_num,sum_po_lines_delay_risk]
   }
 
   measure: sum_po_lines_delay_risk_supplier {
     type: sum
     sql: case when ${l_scores}>=@{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
     html: @{big_money_format} ;;
-    drill_fields: [supplier.supplier_name,supplier.supplier_city,supplier.supplier_region_cd,store.store_name,store.store_country_cd,sum_po_lines_delay_risk]
+    drill_fields: [supplier_new.supplier_name,supplier_new.supplier_city,supplier_new.supplier_region_cd,store.store_name,store.store_country_cd,sum_po_lines_delay_risk]
   }
 
   measure: sum_po_lines_delay_risk_plant {
     type: sum
     sql: case when ${l_scores}>=@{delay_probability_value} then ${purch_order_quan}*${net_price_curr} end ;;
     html: @{big_money_format} ;;
-    drill_fields: [store.store_name,store.store_country_cd,supplier.supplier_name,supplier.supplier_city,sum_po_lines_delay_risk]
+    drill_fields: [store.store_name,store.store_country_cd,supplier_new.supplier_name,supplier_new.supplier_city,sum_po_lines_delay_risk]
   }
   measure: sum_po_lines_delay_risk_map {
     type: sum
